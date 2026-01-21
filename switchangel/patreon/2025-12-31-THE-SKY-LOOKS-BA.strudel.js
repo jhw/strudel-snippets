@@ -10,20 +10,20 @@ setCpm(140/4);
 
 
 $BASS: note("<7@4 15@2 10@2>".add(24))
-  .detune(.7)
-  .s("supersaw").rlpf(slider(0.722)).fm(1.4).fmh(2.03)
-  .seg(16)
-  // .lpenv(8)
- .diode("1:1").o(4).room(.6).roomsize(3)._scope();
+    .detune(.7)
+    .s("supersaw").rlpf(slider(0.722)).fm(1.4).fmh(2.03)
+    .seg(16)
+// .lpenv(8)
+    .diode("1:1").o(4).room(.6).roomsize(3)._scope();
 
 $LEAD: note("<<14 [29 _ _ 19]>@3 22@4  26>".add(36))
-  .detune(.7).pwrate(.3).room(1).room(3)
-  .s("pulse").rlpf(slider(0.836))
-  .fm("2.03").fmh(2.01)
- .diode("1").o(4).postgain(.5)._scope();
+    .detune(.7).pwrate(.3).room(1).room(3)
+    .s("pulse").rlpf(slider(0.836))
+    .fm("2.03").fmh(2.01)
+    .diode("1").o(4).postgain(.5)._scope();
 
 _$PIANO: note("<g4 f4 d5 g4 g4 f4 d5 g4 g4!2 d5 g4 g4 f4 d5 d#5>*8")
-  .s("piano").delay(.6).rel(2).gain(.6);
+    .s("piano").delay(.6).rel(2).gain(.6);
 
 
 

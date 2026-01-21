@@ -8,7 +8,7 @@ $ n <0 5 -7 2 4 0 7>*16 # add(n <0 0 <7!8 5!8> 0 0 0 0>*16) # add (n 7,0)
 # lpenv (tri # mul 4 # slow 16) 
 # delay .7 # hpf 300
 # orbit 3
-`
+`;
 $bass: mondo`
 $ n <-14@4 -12@4 -9@3 [-4 <-3 -16>]>
 # scale e:minor # s supersaw * 8 # detune .6 

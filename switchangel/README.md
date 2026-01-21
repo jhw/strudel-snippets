@@ -7,8 +7,12 @@
 
 ### videos
 
-- https://youtu.be/2kzjOIsL6CM
+- https://www.youtube.com/watch?v=2kzjOIsL6CM
 - https://www.twitch.tv/videos/2673823778
 
 ### shorts
 
+- https://www.youtube.com/watch?v=qiatPuJpxLs
+- https://www.youtube.com/watch?v=aPsq5nqvhxg
+- https://www.youtube.com/watch?v=iu5rnQkfO6M
+- https://www.youtube.com/watch?v=GWXCCBsOMSg

@@ -12,6 +12,6 @@ $ n <0 3 1 8 9>*8 # add (n 2) # scale g:major:pentatonic # s wt_vgame:6  # rel .
 
 //piano
 $ s piano # note g1 # slow 4
-`._pianoroll()
+`._pianoroll();
 
 

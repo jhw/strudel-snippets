@@ -1,5 +1,5 @@
 // @title I accidentally made Stranger Things Again @By Switch Angel
-setCpm(136/4)
+setCpm(136/4);
 
 $lead: mondo`
 $ n <0 5 -7 2 4 0 7>*16 # add(n <0 0 <7!8 5!8> 0 0 0 0>*16) # add (n 7,0)
@@ -15,11 +15,11 @@ $ n <-14@4 -12@4 -9@3 [-4 <-3 -16>]>
 # lpf 200 # lpd .2 # lpenv 3 # dist 3:.6 # delay .5
 # lpd 2
 # orbit 2
-`
+`;
 
 _$TOP: mondo`$ s brk # scrub (rand # seg 16) # dec .04 
-# ribbon 13 .5 # gain .4 `
+# ribbon 13 .5 # gain .4 `;
 
 $kick: mondo`$ s bd:4 * 4 # dec .2 # duck 2:3 # duckattack .16
-# duckdepth .6  # almostNever(# ply 2)` 
+# duckdepth .6  # almostNever(# ply 2)`;
 

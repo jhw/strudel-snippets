@@ -3,8 +3,8 @@
 //stext
 //transform text input into synthesis!
 register('stxt', (text, pat) => {
-  const RANGE = 'range'
-  const SELECTION = 'selection'
+  const RANGE = 'range';
+  const SELECTION = 'selection';
 
   const params = {
     lpf: {
@@ -127,55 +127,55 @@ register('stxt', (text, pat) => {
   const utf8Bytes = encoder.encode(text);
 
   // Convert each byte to a two-digit hexadecimal string and join them
-  const byteArray = Array.from(utf8Bytes)
+  const byteArray = Array.from(utf8Bytes);
 
 
-  const byteSize = 255
-  let acc = 0
+  const byteSize = 255;
+  let acc = 0;
   Object.keys(params).forEach((p, i) => {
-    const { type, transform = (x) => x, val } = params[p]
+    const { type, transform = (x) => x, val } = params[p];
 
     let byteVal = byteArray[i % byteArray.length];
-    acc += byteVal
-    byteVal = [byteVal + acc] % byteSize
+    acc += byteVal;
+    byteVal = [byteVal + acc] % byteSize;
 
     if (type === SELECTION) {
 
-      pat = pat[p](transform(val[byteVal % val.length]))
+      pat = pat[p](transform(val[byteVal % val.length]));
 
 
     } else {
-      const min = val.at(0)
-      const max = val.at(-1)
-      const pTotal = max - min
-      const valAdjusted = ((pTotal / byteSize) * byteVal) + min
+      const min = val.at(0);
+      const max = val.at(-1);
+      const pTotal = max - min;
+      const valAdjusted = ((pTotal / byteSize) * byteVal) + min;
 
-      pat = pat[p](transform(valAdjusted))
+      pat = pat[p](transform(valAdjusted));
 
     }
   })
 
   return pat
-})
+});
 // --- End baked register functions ---
 
-setCpm(140/4)
-const volume = slider(0.667)
+setCpm(140/4);
+const volume = slider(0.667);
 
 
-const patrons = `
-<Dillon_Summers Be_Ankh_Ah Hailey_Halcyon recursive 
-Charlie_Juno_Jr Janeishly Daft Rick_Wells>*16
-`
+const patrons = `;
+<Dillon_Summers Be_Ankh_Ah Hailey_Halcyon recursive;
+Charlie_Juno_Jr Janeishly Daft Rick_Wells>*16;
+`;
 $PATRON_BASS: s("sawtooth!16")
   .stxt(patrons).att(0)
-  .scale("e:major:pentatonic")
+  .scale("e:major:pentatonic");
   // .diode("4:.3")
   // .punchcard({labels: 1})
   // .label(patrons)
 
-$KICK: s("sbd!4")
+$KICK: s("sbd!4");
 
 HAT$: s(" <- oh:2>*8")
-  .dec(.3).delay(.5).o(5).delaytime(1/8)
+  .dec(.3).delay(.5).o(5).delaytime(1/8);
 

@@ -33,22 +33,22 @@ register('fill', function (pat) {
     }
     return newHaps;
   });
-})
+});
 register('trancegate', (density, seed, length, x) => {
-  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7)
-})
+  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7);
+});
 // --- End baked register functions ---
 
-setCpm(170/4)
-samples('github:switchangel/pad')
+setCpm(170/4);
+samples('github:switchangel/pad');
 
 $BREAK: s("brk/2").fit().scrub(irand(16).div(16).seg(8))
   .almostNever(ply("2 | 4"))
   .room(.3).ir("swpad:3").irbegin(.5)
-  .roomsize(.4)
+  .roomsize(.4);
 
 $BASS: n("<5 -1 0@2>".sub(7))
   .scale("C:minor").s("triangle")
   .trancegate(1.3,3,2)
   .sometimesBy(.2, x => x.trans("12"))
-  .slow(2).penv(24).pdec(.05).clip(.94).dec(2)
+  .slow(2).penv(24).pdec(.05).clip(.94).dec(2);

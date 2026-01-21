@@ -34,26 +34,26 @@ register('fill', function (pat) {
     }
     return newHaps;
   });
-})
+});
 register('trancegate', (density, seed, length, x) => {
-  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7)
-})
+  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7);
+});
 // --- End baked register functions ---
 
-setCpm(134/4)
+setCpm(134/4);
 register('nine', (pat) => {
-  return pat.bank('tr909') 
-})
+  return pat.bank('tr909');
+});
 
-$KICK: s("bd").trancegate(slider(0.8,.4,2,.1),45,1).nine()
+$KICK: s("bd").trancegate(slider(0.8,.4,2,.1),45,1).nine();
 
-$HAT: s("hh").trancegate(slider(0.8,.4,2,.1),6,1).cut(2)
+$HAT: s("hh").trancegate(slider(0.8,.4,2,.1),6,1).cut(2);
 
-$COWBELL: s("cb").trancegate(slider(0.4,.4,2,.1),7,2)
+$COWBELL: s("cb").trancegate(slider(0.4,.4,2,.1),7,2);
 
-$RIM: s("rim").trancegate(slider(0.7,.4,2,.1),48,2).nine().gain(.7)
+$RIM: s("rim").trancegate(slider(0.7,.4,2,.1),48,2).nine().gain(.7);
 
-$TOM: s("lt").trancegate(slider(0.9,.4,2,.1),16,1).nine()
+$TOM: s("lt").trancegate(slider(0.9,.4,2,.1),16,1).nine();
 
 _$OPENHAT: s("<- oh>*8").nine().gain(.7)
-  .almostNever(ply("2")).clip(1).cut(2)
+  .almostNever(ply("2")).clip(1).cut(2);

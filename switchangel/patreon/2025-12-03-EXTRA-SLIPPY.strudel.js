@@ -1,22 +1,22 @@
 //@title Extra Slippy @by Switch Angel
 // --- Baked register functions from prebake.strudel ---
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) })
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
 // --- End baked register functions ---
 
-setCpm(140/4)
-const volume = slider(0.9)
-all(x => x.mul(postgain(volume)))
+setCpm(140/4);
+const volume = slider(0.9);
+all(x => x.mul(postgain(volume)));
 
 $KICK: s("sbd!4").delay(.4)
-  .duck("3:4:5").duckdepth(.8)
+  .duck("3:4:5").duckdepth(.8);
 
 $BREAK: s("brk/2").fit().hpf(0).scrub("0!4").diode("2:.5").delay(.4)
-  .delaysync(3/8) 
+  .delaysync(3/8);
 
-$HAT: s("white!16").dec(tri.range(0.05,.1).fast(4)).gain(.5)
+$HAT: s("white!16").dec(tri.range(0.05,.1).fast(4)).gain(.5);
 
 $BASS: n("-14".seg(16))
   .scale("e:minor").o(5).lpenv(4).unison(2).wt("<.5 1>/2").clip(.85).lpd(.1)
-  .s("supersaw,wt_digital:3").rlpf(slider(0.245)).lpq(0).diode("2:.7")
+  .s("supersaw,wt_digital:3").rlpf(slider(0.245)).lpq(0).diode("2:.7");
 

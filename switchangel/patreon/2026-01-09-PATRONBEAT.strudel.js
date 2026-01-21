@@ -33,18 +33,18 @@ register('fill', function (pat) {
     }
     return newHaps;
   });
-})
+});
 // tb303 style filter envelope control between 0 & 1 values for useful range
 register('acidenv', (x, pat) => pat.lpf(100)
   .lpenv(x * 9).lps(.2).lpd(.12).lpq(2)
-)
+);
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) })
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
 //stext
 //transform text input into synthesis!
 register('stxt', (text, pat) => {
-  const RANGE = 'range'
-  const SELECTION = 'selection'
+  const RANGE = 'range';
+  const SELECTION = 'selection';
 
   const params = {
     lpf: {
@@ -167,39 +167,39 @@ register('stxt', (text, pat) => {
   const utf8Bytes = encoder.encode(text);
 
   // Convert each byte to a two-digit hexadecimal string and join them
-  const byteArray = Array.from(utf8Bytes)
+  const byteArray = Array.from(utf8Bytes);
 
 
-  const byteSize = 255
-  let acc = 0
+  const byteSize = 255;
+  let acc = 0;
   Object.keys(params).forEach((p, i) => {
-    const { type, transform = (x) => x, val } = params[p]
+    const { type, transform = (x) => x, val } = params[p];
 
     let byteVal = byteArray[i % byteArray.length];
-    acc += byteVal
-    byteVal = [byteVal + acc] % byteSize
+    acc += byteVal;
+    byteVal = [byteVal + acc] % byteSize;
 
     if (type === SELECTION) {
 
-      pat = pat[p](transform(val[byteVal % val.length]))
+      pat = pat[p](transform(val[byteVal % val.length]));
 
 
     } else {
-      const min = val.at(0)
-      const max = val.at(-1)
-      const pTotal = max - min
-      const valAdjusted = ((pTotal / byteSize) * byteVal) + min
+      const min = val.at(0);
+      const max = val.at(-1);
+      const pTotal = max - min;
+      const valAdjusted = ((pTotal / byteSize) * byteVal) + min;
 
-      pat = pat[p](transform(valAdjusted))
+      pat = pat[p](transform(valAdjusted));
 
     }
   })
 
   return pat
-})
+});
 register('trancegate', (density, seed, length, x) => {
-  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7)
-})
+  return x.struct(rand.mul(density).round().seg(16).rib(seed, length)).fill().clip(.7);
+});
 // --- End baked register functions ---
 
 register('colorparty', (p, pat) => {
@@ -259,14 +259,14 @@ const agent_of_the_realm = [
   "Vincent Brakshoofden",  "William Lamy",  "Windy the Deer",
   "Zimi"
 ];
-const le = agent_of_the_realm.length
-const le2 = angel.length
+const le = agent_of_the_realm.length;
+const le2 = angel.length;
 $AGENTS_LEAD: s("sawtooth!8")
   .stxt(pick(agent_of_the_realm,  time.fast(8).mod(le))).att(0).fast(2)
   .scale("e:major:pentatonic").att(0).lpa(0).room(.7)
   .acidenv(slider(0.773)).lpd(.7)
   .delaytime(3/16).delay(.5).pan(rand).colorparty(rand).o(3).gain(.7)
-  ._pianoroll()
+  ._pianoroll();
 
 
 $ANGEL_HARMONY: s("sawtooth!8").pan(rand.fast(2))
@@ -274,18 +274,18 @@ $ANGEL_HARMONY: s("sawtooth!8").pan(rand.fast(2))
   .scale("e:major:pentatonic").att(.1).lpa(0).room(.7)
   .acidenv(slider(0.509)).lpd(.7)
   .delaytime(3/16).delay(.5).o(2).gain(.7)
-  ._scope()
+  ._scope();
 
-$KICK: s("bd:2!4").duck("2:3")
+$KICK: s("bd:2!4").duck("2:3");
 
-$CLAP: s("<- cp>*4").gain(.6)
+$CLAP: s("<- cp>*4").gain(.6);
 
 $NOISEBURST: s("white").dec(.2)
   .trancegate(1.3,23,1).gain(.5)
-  .pan(rand.fast(7)).delay(1).rlpf(rand.fast(7).rib(0,1))
+  .pan(rand.fast(7)).delay(1).rlpf(rand.fast(7).rib(0,1));
 
 
 $BASS: note("e2!16".add("<-3 0 <-7 2>@2>/2"))
-  .s("supersaw!8").acidenv(slider(0.767))
+  .s("supersaw!8").acidenv(slider(0.767));
 
 

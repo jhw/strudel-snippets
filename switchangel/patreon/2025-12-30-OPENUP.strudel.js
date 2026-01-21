@@ -3,34 +3,34 @@
 // tb303 style filter envelope control between 0 & 1 values for useful range
 register('acidenv', (x, pat) => pat.lpf(100)
   .lpenv(x * 9).lps(.2).lpd(.12).lpq(2)
-)
+);
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) })
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
 // --- End baked register functions ---
 
-setCpm(136/4)
+setCpm(136/4);
 
 $KICK: s("bd:4!4").duck("3:4:5").duckdepth(.7).duckattack(.17)
-  .rlpf(.4).dec(.3)
+  .rlpf(.4).dec(.3);
 
-const bpat = "<0 0 2 0 0 2 2 <0 2 4 5>>*16".sub(7).add(0)
+const bpat = "<0 0 2 0 0 2 2 <0 2 4 5>>*16".sub(7).add(0);
 
 $LEAD: n("<0 0 5 4 3>*16").scale("g:major:pentatonic")
   .s("sawtooth")
   .acidenv(slider(0.298)).room(1).roomsize(4)
-.o(3)._pianoroll()
+.o(3)._pianoroll();
 $PIANO: n("<0 0 5 4 3>*8")
   .scale("g:major:pentatonic")
   .s("piano").jux(rev).rel(2)
   .velocity(rand.fast(3).range(0.4,.8)).o(4)
-._pianoroll()
+._pianoroll();
 
-$OPENHAT: s("<- oh:2>*8").delay(.3).diode("2:.4").dec(.2).lpf(3000)
+$OPENHAT: s("<- oh:2>*8").delay(.3).diode("2:.4").dec(.2).lpf(3000);
 
 $BASS: n("<3 0 7 4 5>/2".sub(11)).seg(16)
   .scale("g:major:pentatonic").s("supersaw")
   .detune(.7).diode(.8)
   .acidenv(slider(0.476)).o(5)
-._pianoroll()
+._pianoroll();
 
 

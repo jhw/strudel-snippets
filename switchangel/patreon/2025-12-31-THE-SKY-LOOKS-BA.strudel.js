@@ -12,7 +12,7 @@ setCpm(140/4);
 $BASS: note("<7@4 15@2 10@2>".add(24))
   .detune(.7)
   .s("supersaw").rlpf(slider(0.722)).fm(1.4).fmh(2.03)
-  .seg(16);
+  .seg(16)
   // .lpenv(8)
  .diode("1:1").o(4).room(.6).roomsize(3)._scope();
 

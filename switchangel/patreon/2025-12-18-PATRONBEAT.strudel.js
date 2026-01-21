@@ -163,7 +163,7 @@ setCpm(140/4);
 const volume = slider(0.667);
 
 
-const patrons = `;
+const patrons = `
 <Dillon_Summers Be_Ankh_Ah Hailey_Halcyon recursive;
 Charlie_Juno_Jr Janeishly Daft Rick_Wells>*16;
 `;

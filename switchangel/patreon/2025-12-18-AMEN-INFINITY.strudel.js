@@ -1,4 +1,5 @@
 //@title Amen Infinity @By Switch Angel
+
 // --- Baked register functions from prebake.strudel ---
 // fill in gaps between events
 register('fill', function (pat) {

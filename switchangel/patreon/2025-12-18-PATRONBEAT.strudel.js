@@ -1,4 +1,5 @@
 // @Title Patron Beat 25.12.18 @By Everyone
+
 // --- Baked register functions from prebake.strudel ---
 //stext
 //transform text input into synthesis!

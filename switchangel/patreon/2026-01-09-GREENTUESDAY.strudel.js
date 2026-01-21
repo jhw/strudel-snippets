@@ -1,4 +1,3 @@
-
 setCpm(130/4);
 
 //@title Green Tuesday @By Switch Angel
@@ -15,7 +14,6 @@ $BASS: n("<0@4 -1 -2>".add("<0 7>*8")).seg(8).scale("b:dorian")
   .s("supersaw").detune(.3)
   .clip(1)
   .trans(-24).begin(.9).lpf(200).lpenv(5).diode("2:.6");
-
 
 $KICK: s("bd").beat("0,4,8,12,16,20,24,28,29,30,31",32).slow(2);
 

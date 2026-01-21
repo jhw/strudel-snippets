@@ -1,11 +1,12 @@
 //@title MUKET at 4am @By Switch Angel
+
 // --- Baked register functions from prebake.strudel ---
 // tb303 style filter envelope control between 0 & 1 values for useful range
 register('acidenv', (x, pat) => pat.lpf(100)
          .lpenv(x * 9).lps(.2).lpd(.12).lpq(2)
         );
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)); });
 // --- End baked register functions ---
 
 const volume = slider(1);

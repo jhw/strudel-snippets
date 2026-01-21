@@ -1,4 +1,5 @@
 //@title DID I MAKE THIS? OR IS XFER GOING TO SUE ME //@by SWITCH ANGEL..possibly
+
 // --- Baked register functions from prebake.strudel ---
 // tb303 style filter envelope control between 0 & 1 values for useful range
 register('acidenv', (x, pat) => pat.lpf(100)
@@ -9,11 +10,10 @@ register('fmtime', (start,length, pat) => {
     return pat.fm(modu).fmh(modu);
 });
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)); });
 // --- End baked register functions ---
 
 setCpm(138/4);
-
 const volume = slider(0.853);
 all(x => x.mul(postgain(volume)));
 

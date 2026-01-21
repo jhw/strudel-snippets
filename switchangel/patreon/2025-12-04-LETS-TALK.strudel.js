@@ -1,4 +1,5 @@
 //@TITLE Lets Talk @by Switch Angel
+
 // --- Baked register functions from prebake.strudel ---
 // tb303 style filter envelope control between 0 & 1 values for useful range
 register('acidenv', (x, pat) => pat.lpf(100)
@@ -9,7 +10,7 @@ window.pk = function (...args) {
     return pick(args, control);
 }
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)); });
 // --- End baked register functions ---
 
 setCpm(150/4);
@@ -21,9 +22,11 @@ const pkstack = pk(
     "Dm",
     0
 );
+
 $LEAD: n("<0 3 9 4 7>*16".add(-3)).chord(pkstack).voicing().s("pulse").add(note("-4"))
     .pan(rand).pwrate(3).acidenv(slider(0.796)).delay(.7).o(3)
     ._pianoroll();
+
 $BASS: note("<a3 c4 g3 d3 a3 g3 g4 d4>".sub(24).add("<12>*8"))
     .pw(.3).seg(16).s("supersaw")
     .rlpf(.3).acidenv(slider(0.793)).add(note("-4")).o(4);

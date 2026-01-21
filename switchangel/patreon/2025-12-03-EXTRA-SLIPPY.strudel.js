@@ -1,7 +1,8 @@
 //@title Extra Slippy @by Switch Angel
+
 // --- Baked register functions from prebake.strudel ---
 // lpf between 0 and 1
-register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)) });
+register('rlpf', (x, pat) => { return pat.lpf(pure(x).mul(12).pow(4)); });
 // --- End baked register functions ---
 
 setCpm(140/4);

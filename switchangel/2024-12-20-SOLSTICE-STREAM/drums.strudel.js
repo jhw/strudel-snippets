@@ -2,23 +2,7 @@
 
 setCps(140/60/4);
 
-const tran = pick(["0", "<0!4 -6 -4 >/2"], 0);
-
 const kick = s("bd:47").struct("x(8,32)".slow(2)).gain(.9);
-
-const noisePat = [
-  "{~ @ x@2  x x@2 x }%16",
-  "{x x ~ x ~ x x ~ }%16"
-];
-
-const basskick = s("sbd:2").note("c2").add(tran).struct("x!4").clip(1)
-  .att(0.6).hpf(2).hpenv(13).hpattack(0).hpdecay(.19).orbit(2).postgain(.76);
-
-const shell = s("white, sd:0:6").struct(pick(noisePat, "0"))
-  .hpf(600).bpf("300").mul(sine.slow(8).range(0.8, 1.5)).mul("{1@7 1.2}%16")
-  .bpenv(sine.slow(10).range(1, 1.8)).bpsustain(0.4)
-  .bpdecay(.13).bpq(.46).decay(.13).postgain(2.6).phaser(.2)
-  .pan(sine.fast(4)).delay(.8).delayfeedback(0.5).delaytime(3/8);
 
 const hats = note("c3").s("{glitch:4:1.8,white}")
   // .struct("{x!2 ~ x}%16")

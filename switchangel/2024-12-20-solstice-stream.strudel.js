@@ -48,29 +48,29 @@ const acid = note("e2").add("{0@5 1 -12 0@9}%16".ribbon(0.5, 1)
       .hpf(200)
       .distort("3:.8").delay(.5).orbit(2).postgain(.8);
 
-const kick = s("jbd:47").struct("x(8,32)".slow(2)).gain(.9);
+const kick = s("bd:47").struct("x(8,32)".slow(2)).gain(.9);
 
 const noisePat = [
     "{~ @ x@2  x x@2 x }%16",
     "{x x x ~ x x ~ x ~}%16"
 ];
 
-const basskick = s("jsbd:8").note("c2".add(tran)).struct("@!4").clip(1)
+const basskick = s("sbd:8").note("c2".add(tran)).struct("@!4").clip(1)
       .att(0.6).hpf(2).hpenv(13).hpattack(0).hpdecay(.19).orbit(2).postgain(.76);
 
-const shell = s("white, jsd:0:6").struct(pick(noisePat, "@7"))
+const shell = s("white, sd:0:6").struct(pick(noisePat, "@7"))
       .hpf(600).bpf("300").mul(sine.slow(8).range(0.8, 1.5)).mul("{1@7 1.2}%16")
       .bpenv(sine.slow(10).range(1, 1.8)).bpsustain(0.4)
       .bpdecay(.13).bpq(.46).decay(.13).postgain(2.6).phaser(.2)
       .pan(sine.fast(4)).delay(.8).delayfeedback(0.5).delaytime(3/8);
 
-const hats = note("c3").s("jglitch:0:1.8,white")
+const hats = note("c3").s("glitch:0:1.8,white")
 // .struct("{x!2 ~ x}%16")
       .struct("x!16")
       .decay(saw.fast(4).range(0.05, .15)).begin(tri.range(0.08, 0.3).slow(4));
-const ohats = s("joh:17, joh:6:.5").struct("([0] 1)%8").clip(1);
-const clap = s("jcp:24:1, jsd:26:[<.7 0 > 0], jsd:4:0").struct("(~ 1)%4".almostNever(x => x.ply("1")));
-const clap2 = note("c2").s("jsd:7").struct("x(16,16,2)").clip(1).decay(.2).gain(slider(0,0,1));
+const ohats = s("oh:17, oh:6:.5").struct("([0] 1)%8").clip(1);
+const clap = s("cp:24:1, sd:26:[<.7 0 > 0], sd:4:0").struct("(~ 1)%4".almostNever(x => x.ply("1")));
+const clap2 = note("c2").s("sd:7").struct("x(16,16,2)").clip(1).decay(.2).gain(slider(0,0,1));
 
 const chords = [
     "[E3, B3, F#5, G5]",

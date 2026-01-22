@@ -35,7 +35,7 @@ register('grab', function (scale, pat) {
 
 setCps(140/60/4);
 
-const tran = pick("@", "<0!4 -6 -4 >/2", 0);
+const tran = pick(["0", "<0!4 -6 -4 >/2"], 0);
 const acid = note("e2").add("{0@5 1 -12 0@9}%16".ribbon(0.5, 1))
   // .sub(12)
   .add(tran).grab("e:f:f#:g:a:b:c:d")
@@ -53,10 +53,10 @@ const noisePat = [
   "{x x ~ x ~ x x ~ }%16"
 ];
 
-const basskick = s("sbd:2").note("c2").add(tran).struct("@!4").clip(1)
+const basskick = s("sbd:2").note("c2").add(tran).struct("x!4").clip(1)
   .att(0.6).hpf(2).hpenv(13).hpattack(0).hpdecay(.19).orbit(2).postgain(.76);
 
-const shell = s("white, sd:0:6").struct(pick(noisePat, "@"))
+const shell = s("white, sd:0:6").struct(pick(noisePat, "0"))
   .hpf(600).bpf("300").mul(sine.slow(8).range(0.8, 1.5)).mul("{1@7 1.2}%16")
   .bpenv(sine.slow(10).range(1, 1.8)).bpsustain(0.4)
   .bpdecay(.13).bpq(.46).decay(.13).postgain(2.6).phaser(.2)
@@ -64,7 +64,7 @@ const shell = s("white, sd:0:6").struct(pick(noisePat, "@"))
 
 const hats = note("c3").s("{glitch:4:1.8,white}")
   // .struct("{x!2 ~ x}%16")
-  .struct("@!16")
+  .struct("x!16")
   .decay(saw.fast(4).range(0.05, .15)).begin(tri.range(0.08, 0.3).slow(4));
 
 const ohats = s("oh:17, oh:6:.5").struct("{[0] 1}%8").clip(1);

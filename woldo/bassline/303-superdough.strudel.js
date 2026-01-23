@@ -2,6 +2,10 @@
 
 setCps(130/60/4);
 
+// waveform
+const wavePick = slider(0, 0, 1, 1);  // 0: sawtooth, 1: square
+const waveforms = ["sawtooth", "square"];
+
 // volume envelope
 const vDecay = slider(0.2, 0, 0.4, 0.1);
 const vSustain = slider(0.1, 0, 0.2, 0.1);
@@ -14,7 +18,7 @@ const fDecay = slider(0.1, 0, 0.2, 0.1);
 const fEnv = slider(2, 0, 4, 0.1);
 
 note("{A1 A1 [A1 A2] ~ A1 [~ A1] A1 A2}%8")
-  .s("sawtooth")
+  .s(pick(wavePick, waveforms))
   .decay(vDecay)
   .sustain(vSustain)
   .release(vRelease)

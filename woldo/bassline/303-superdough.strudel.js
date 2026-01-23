@@ -13,7 +13,7 @@ const waveforms = ["sawtooth", "square"];
 // filter envelope
 const fCutoff = slider(180, 50, 350, 10);
 const fRes = slider(10, 0, 20, 1);
-const fDecay = slider(0.1, 0, 0.2, 0.01);
+const fDecay = slider(0.1, 0, 0.3, 0.01);
 const fEnv = slider(2, 0, 4, 0.1);
 
 // === PATTERNS ===

@@ -22,128 +22,85 @@ setCps(130/60/4);
 
 const breakPick = slider(0, 0, 31, 1);
 const patternPick = slider(0, 0, 15, 1);
-const gain = slider(0.8, 0, 1, 0.1);
+const gainVal = slider(0.8, 0, 1, 0.1);
 
-// === BREAKS WITH BAR COUNTS ===
-// Each entry: [name, bars]
-// bars determines loopAt value and slice count (8 slices per bar)
+// === BREAKS ===
+// Grouped by bar count for correct loopAt/slice values
 
-const breaks = [
-  // 1-bar breaks (8 slices: 0-7)
-  ["sesame", 1],         // 0
-  ["mechanicalman", 1],  // 1
-  ["sport", 1],          // 2
-  ["think", 1],          // 3
-  ["around", 1],         // 4
-  ["action", 1],         // 5
-  ["swat", 1],           // 6
-  ["impeach", 1],        // 7
+const breaks1 = ["sesame", "mechanicalman", "sport", "think", "around", "action", "swat", "impeach"];
+const breaks2 = ["useme", "do", "funkydrummer", "kool", "rill", "king", "riffin", "apache", "neworleans", "hitormiss", "hotline", "ripple", "hungup", "newday", "movement", "boogiewoogie", "delight", "eeloil", "marymary", "sneakin", "squib", "groove"];
+const breaks4 = ["fireeater", "amen"];
 
-  // 2-bar breaks (16 slices: 0-15)
-  ["useme", 2],          // 8
-  ["do", 2],             // 9
-  ["funkydrummer", 2],   // 10
-  ["kool", 2],           // 11
-  ["rill", 2],           // 12
-  ["king", 2],           // 13
-  ["riffin", 2],         // 14
-  ["apache", 2],         // 15
-  ["neworleans", 2],     // 16
-  ["hitormiss", 2],      // 17
-  ["hotline", 2],        // 18
-  ["ripple", 2],         // 19
-  ["hungup", 2],         // 20
-  ["newday", 2],         // 21
-  ["movement", 2],       // 22
-  ["boogiewoogie", 2],   // 23
-  ["delight", 2],        // 24
-  ["eeloil", 2],         // 25
-  ["marymary", 2],       // 26
-  ["sneakin", 2],        // 27
-  ["squib", 2],          // 28
-  ["groove", 2],         // 29
+// All breaks in order (for slider picking)
+const allBreaks = [...breaks1, ...breaks2, ...breaks4];
 
-  // 4-bar breaks (32 slices: 0-31)
-  ["fireeater", 4],      // 30
-  ["amen", 4],           // 31
+// Bar count for each break (parallel array)
+const barCounts = [
+  1,1,1,1,1,1,1,1,  // 8 x 1-bar
+  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  // 22 x 2-bar
+  4,4  // 2 x 4-bar
 ];
+
+// Slice counts (bars * 8)
+const sliceCounts = barCounts.map(b => b * 8);
 
 // === PATTERNS ===
-// Base patterns designed for 8 slices per bar
-// Pattern positions: 0,4 = kicks, 2,6 = snares, 1,3,5,7 = hats/ghosts
+// Pre-generated patterns for each bar count.
+// Base pattern [0, 2, 4, 6] scaled across all bars.
 
-const basePatterns = [
-  // backbeat focused
-  [0, 2, 4, 6],    // 0: straight 8ths
-  [0, 3, 4, 6],    // 1: syncopated
-  [0, 2, 5, 6],    // 2: late snare
-  [1, 2, 4, 6],    // 3: ghost kick
-
-  // syncopated
-  [0, 2, 4, 7],    // 4: end fill
-  [0, 3, 5, 6],    // 5: double syncopation
-  [0, 2, 3, 6],    // 6: ghost before snare
-  [1, 2, 5, 6],    // 7: all off-beat
-
-  // broken
-  [0, 1, 4, 6],    // 8: early ghost
-  [0, 2, 4, 5],    // 9: early second snare
-  [0, 3, 4, 7],    // 10: both syncopated
-  [1, 3, 5, 7],    // 11: all off-beats
-
-  // choppy
-  [0, 1, 2, 4],    // 12: first half dense
-  [4, 5, 6, 7],    // 13: second half only
-  [0, 2, 4, 6],    // 14: all on-beats (same as 0)
-  [0, 4, 5, 6],    // 15: kick + second half
+// 1-bar patterns (8 slices, plays over 4 steps)
+const patterns1 = [
+  "{0 2 4 6}%4", "{0 3 4 6}%4", "{0 2 5 6}%4", "{1 2 4 6}%4",
+  "{0 2 4 7}%4", "{0 3 5 6}%4", "{0 2 3 6}%4", "{1 2 5 6}%4",
+  "{0 1 4 6}%4", "{0 2 4 5}%4", "{0 3 4 7}%4", "{1 3 5 7}%4",
+  "{0 1 2 4}%4", "{4 5 6 7}%4", "{0 2 4 6}%4", "{0 4 5 6}%4",
 ];
 
-// === HELPER: Scale pattern to bar count ===
-// Takes base pattern (designed for 1 bar / 8 slices) and scales to actual bar count.
-// Base pattern [0, 2, 4, 6] becomes:
-//   1 bar:  [0, 2, 4, 6] (slices 0-7)
-//   2 bars: [0, 2, 4, 6, 8, 10, 12, 14] (slices 0-7 then 8-15)
-//   4 bars: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
-// Same relative pattern in each bar, but pulls from different slices -
-// so you get kick from bar 1, then kick from bar 2, etc. Each bar's drums
-// are slightly different in most breaks, giving natural variation.
+// 2-bar patterns (16 slices, plays over 8 steps)
+const patterns2 = [
+  "{0 2 4 6 8 10 12 14}%8", "{0 3 4 6 8 11 12 14}%8",
+  "{0 2 5 6 8 10 13 14}%8", "{1 2 4 6 9 10 12 14}%8",
+  "{0 2 4 7 8 10 12 15}%8", "{0 3 5 6 8 11 13 14}%8",
+  "{0 2 3 6 8 10 11 14}%8", "{1 2 5 6 9 10 13 14}%8",
+  "{0 1 4 6 8 9 12 14}%8", "{0 2 4 5 8 10 12 13}%8",
+  "{0 3 4 7 8 11 12 15}%8", "{1 3 5 7 9 11 13 15}%8",
+  "{0 1 2 4 8 9 10 12}%8", "{4 5 6 7 12 13 14 15}%8",
+  "{0 2 4 6 8 10 12 14}%8", "{0 4 5 6 8 12 13 14}%8",
+];
 
-function scalePattern(basePattern, bars) {
-  if (bars === 1) {
-    return basePattern;
-  } else if (bars === 2) {
-    // Repeat pattern in both bars
-    return [...basePattern, ...basePattern.map(x => x + 8)];
-  } else if (bars === 4) {
-    // Repeat pattern across all 4 bars
-    return [
-      ...basePattern,
-      ...basePattern.map(x => x + 8),
-      ...basePattern.map(x => x + 16),
-      ...basePattern.map(x => x + 24)
-    ];
-  }
-  return basePattern;
-}
+// 4-bar patterns (32 slices, plays over 16 steps)
+const patterns4 = [
+  "{0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30}%16",
+  "{0 3 4 6 8 11 12 14 16 19 20 22 24 27 28 30}%16",
+  "{0 2 5 6 8 10 13 14 16 18 21 22 24 26 29 30}%16",
+  "{1 2 4 6 9 10 12 14 17 18 20 22 25 26 28 30}%16",
+  "{0 2 4 7 8 10 12 15 16 18 20 23 24 26 28 31}%16",
+  "{0 3 5 6 8 11 13 14 16 19 21 22 24 27 29 30}%16",
+  "{0 2 3 6 8 10 11 14 16 18 19 22 24 26 27 30}%16",
+  "{1 2 5 6 9 10 13 14 17 18 21 22 25 26 29 30}%16",
+  "{0 1 4 6 8 9 12 14 16 17 20 22 24 25 28 30}%16",
+  "{0 2 4 5 8 10 12 13 16 18 20 21 24 26 28 29}%16",
+  "{0 3 4 7 8 11 12 15 16 19 20 23 24 27 28 31}%16",
+  "{1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31}%16",
+  "{0 1 2 4 8 9 10 12 16 17 18 20 24 25 26 28}%16",
+  "{4 5 6 7 12 13 14 15 20 21 22 23 28 29 30 31}%16",
+  "{0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30}%16",
+  "{0 4 5 6 8 12 13 14 16 20 21 22 24 28 29 30}%16",
+];
 
-// === GET CURRENT BREAK INFO ===
+// All patterns combined - index 0-15 for 1-bar, 16-31 for 2-bar, 32-47 for 4-bar
+// Pattern index = patternPick + (barCount == 1 ? 0 : barCount == 2 ? 16 : 32)
+const allPatterns = [...patterns1, ...patterns2, ...patterns4];
 
-const currentBreak = breaks[breakPick];
-const breakName = currentBreak[0];
-const bars = currentBreak[1];
-const slices = bars * 8;  // 8 slices per bar = 1/8th bar each (half-beat)
-
-// Scale the selected pattern to match bar count
-const basePattern = basePatterns[patternPick];
-const scaledPattern = scalePattern(basePattern, bars);
-const patternStr = "{" + scaledPattern.join(" ") + "}%" + (bars * 4);
+// Pattern offset by bar count (to index into allPatterns)
+const patternOffsets = barCounts.map(b => b === 1 ? 0 : b === 2 ? 16 : 32);
 
 // === OUTPUT ===
 // loopAt(bars) stretches sample to correct length (1, 2, or 4 cycles)
 // slice(slices, pattern) chops into bars*8 pieces and plays selected pattern
 // note(36) works empirically; strudel default is C3/48 but that sounds wrong here
 
-note(36).sound(breakName)
-  .loopAt(bars)
-  .slice(slices, patternStr)
-  .gain(gain);
+note(36).sound(pick(breakPick, allBreaks))
+  .loopAt(pick(breakPick, barCounts))
+  .slice(pick(breakPick, sliceCounts), pick(patternPick.add(pick(breakPick, patternOffsets)), allPatterns))
+  .gain(gainVal);

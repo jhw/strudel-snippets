@@ -10,19 +10,24 @@ setCps(130/60/4);
 
 // === SLIDERS ===
 
+const wavePick = slider(16, 0, 31, 1);    // 0-31: select from 32 waveforms
 const patternPick = slider(0, 0, 15, 1);  // pattern select
-const wavePick = slider(0, 0, 31, 1);     // 0-31: select from 32 waveforms
-const attack = slider(0.003, 0.001, 0.02, 0.001);  // attack time to avoid clicks (default 3ms)
+
+// volume envelope
+const vDecay = slider(0.2, 0.05, 0.5, 0.01);
 
 // filter envelope
-const fCutoff = slider(180, 50, 350, 10);
+const fCutoff = slider(250, 50, 500, 10);
 const fRes = slider(10, 0, 20, 1);
 const fDecay = slider(0.1, 0, 0.3, 0.01);
 const fEnv = slider(2, 0, 4, 0.1);
 
 // === WAVEFORM SELECTION ===
-// vco sample: 32 slices defined in strudel.json
-// Use n() to select slice 0-31
+// vco sample: 32 waveforms, each 1/32 of the file
+// Slice n: begin = n/32, end = (n+1)/32
+
+const sliceBegin = wavePick.div(32);
+const sliceEnd = wavePick.add(1).div(32);
 
 // === PATTERNS ===
 // Generated using Endless Acid Banger algorithm:
@@ -88,18 +93,17 @@ const accents = [
 ];
 
 // === OUTPUT ===
-// Uses vco sample with n() to select waveform slice
-// attack slider prevents clicks at slice boundaries
+// Uses vco sample with begin/end to select waveform slice
 
 note(pick(patternPick, patterns))
   .s("vco")
-  .n(wavePick)
+  .begin(sliceBegin)
+  .end(sliceEnd)
   .gain(pick(patternPick, accents).mul(0.6))
-  .attack(attack)
+  .decay(vDecay)
+  .sustain(0.1)
+  .release(0.1)
   .lpf(fCutoff)
   .lpq(fRes)
   .lpdecay(fDecay)
-  .lpenv(fEnv)
-  .decay(0.2)
-  .sustain(0.1)
-  .release(0.1);
+  .lpenv(fEnv);

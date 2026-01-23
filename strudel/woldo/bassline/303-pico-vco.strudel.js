@@ -2,8 +2,9 @@
 // Pattern generation inspired by Vitling's Endless Acid Banger
 // https://github.com/vitling/acid-banger
 //
-// Uses pico-vco.wav sample chain: 32 waveforms × 2 seconds each
-// Import this folder via sounds tab to load local samples
+// Uses vco sample chain from gist: 32 waveforms × 2 seconds each
+
+await samples('https://gist.githubusercontent.com/jhw/ee3538b87f6d2a305eb3a0ef34b744f1/raw/strudel.json');
 
 setCps(130/60/4);
 
@@ -20,11 +21,8 @@ const fDecay = slider(0.1, 0, 0.3, 0.01);
 const fEnv = slider(2, 0, 4, 0.1);
 
 // === WAVEFORM SELECTION ===
-// pico-vco.wav: 32 waveforms, each 2 seconds
-// Slice n: begin = n/32, end = (n+1)/32
-
-const sliceBegin = wavePick.div(32);
-const sliceEnd = wavePick.add(1).div(32);
+// vco sample: 32 slices defined in strudel.json
+// Use n() to select slice 0-31
 
 // === PATTERNS ===
 // Generated using Endless Acid Banger algorithm:
@@ -90,13 +88,12 @@ const accents = [
 ];
 
 // === OUTPUT ===
-// Uses pico-vco sample with begin/end to select waveform slice
+// Uses vco sample with n() to select waveform slice
 // attack slider prevents clicks at slice boundaries
 
 note(pick(patternPick, patterns))
-  .s("pico-vco")
-  .begin(sliceBegin)
-  .end(sliceEnd)
+  .s("vco")
+  .n(wavePick)
   .gain(pick(patternPick, accents).mul(0.6))
   .attack(attack)
   .lpf(fCutoff)

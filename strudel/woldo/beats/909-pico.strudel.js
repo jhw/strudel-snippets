@@ -1,6 +1,6 @@
 //@title TR-909 Pico @by Claude
-// Uses sample chains from gist with random slice selection
-// kick: 105 slices, snare: 105 slices, hat: 52 slices
+// Uses sample chains from gist with slice selection
+// kick: 105 slices, snare: 105 slices, hat: 109 slices (perc)
 
 await samples('https://gist.githubusercontent.com/jhw/ee3538b87f6d2a305eb3a0ef34b744f1/raw/strudel.json');
 
@@ -9,24 +9,29 @@ setCps(130/60/4);
 // === SLICE COUNTS ===
 const kickSlices = 105;
 const snareSlices = 105;
-const hatSlices = 52;
+const hatSlices = 109;
 
 // === SLIDERS ===
 
+// delay
+const delayVol = slider(0.3, 0, 1, 0.01);       // wet/dry mix
+const delayTime = slider(0.1875, 0, 0.5, 0.01); // rate (0.1875 = 3/16 dotted eighth)
+const delayFb = slider(0.4, 0, 0.9, 0.01);      // feedback
+
 // kick
-const kickSlice = slider(0, 0, 104, 1);    // 0-104 (105 slices)
+const kickSlice = slider(0, 0, 104, 1);
 const kickRhythmPick = slider(0, 0, 5, 1);
 const kickVolPick = slider(0, 0, 3, 1);
 const kickVol = slider(0.8, 0, 1, 0.1);
 
 // snare
-const snareSlice = slider(0, 0, 104, 1);   // 0-104 (105 slices)
+const snareSlice = slider(0, 0, 104, 1);
 const snareRhythmPick = slider(0, 0, 5, 1);
 const snareVolPick = slider(0, 0, 3, 1);
 const snareVol = slider(0.7, 0, 1, 0.1);
 
 // hat
-const hatSlice = slider(0, 0, 51, 1);      // 0-51 (52 slices)
+const hatSlice = slider(0, 0, 108, 1);
 const hatRhythmPick = slider(0, 0, 5, 1);
 const hatVolPick = slider(0, 0, 3, 1);
 const hatVol = slider(0.5, 0, 1, 0.1);
@@ -97,7 +102,7 @@ const snare = s("snare")
   .struct(pick(snareRhythmPick, snareRhythms))
   .gain(pick(snareVolPick, snareVolAlgos));
 
-const hat = s("hat")
+const hat = s("perc")
   .begin(hatSlice.div(hatSlices))
   .end(hatSlice.add(1).div(hatSlices))
   .struct(pick(hatRhythmPick, hatRhythms))
@@ -109,4 +114,7 @@ stack(
   kick.gain(kickVol),
   snare.gain(snareVol),
   hat.gain(hatVol)
-);
+)
+  .delay(delayVol)
+  .delaytime(delayTime)
+  .delayfeedback(delayFb);

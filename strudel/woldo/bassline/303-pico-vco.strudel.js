@@ -10,8 +10,8 @@ setCps(130/60/4);
 
 // === SLIDERS ===
 
-const wavePick = slider(16, 0, 31, 1);    // 0-31: select from 32 waveforms
-const patternPick = slider(0, 0, 15, 1);  // pattern select
+const wavePick = slider(16, 0, 31, 1);       // 0-31: select from 32 waveforms
+const patternPick = slider(0, 0, 15, 1);     // pattern select
 
 // volume envelope
 const vDecay = slider(0.2, 0.05, 0.5, 0.01);

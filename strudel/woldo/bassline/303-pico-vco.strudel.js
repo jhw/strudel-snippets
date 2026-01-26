@@ -6,11 +6,14 @@
 
 await samples('https://gist.githubusercontent.com/jhw/ee3538b87f6d2a305eb3a0ef34b744f1/raw/strudel.json');
 
-// Simple stereo width for mono signals
-register('stereowidth', (pat) => {
+// M8-style stereo chorus for mono signals
+// w = mod depth (semitones), r = mod rate (Hz), d = delay, s = stereo spread
+register('stereowidth', (w, r, d, s, pat) => {
+  const pl = 0.5 - (s / 2);
+  const pr = 0.5 + (s / 2);
   return pat
-    .pan(0.15)
-    .superimpose(x => x.late(1/75).pan(0.85).add(note(0.1)));
+    .pan(pl).vib(r).vmod(-w)
+    .superimpose(x => x.late(d).pan(pr).vib(r).vmod(w));
 });
 
 setCps(130/60/4);
@@ -114,4 +117,4 @@ note(pick(patternPick, patterns))
   .lpq(fRes)
   .lpdecay(fDecay)
   .lpenv(fEnv)
-  .stereowidth();
+  .stereowidth(0.04, 0.5, 1/80, 0.7);

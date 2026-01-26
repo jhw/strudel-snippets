@@ -6,6 +6,13 @@
 
 await samples('https://gist.githubusercontent.com/jhw/ee3538b87f6d2a305eb3a0ef34b744f1/raw/strudel.json');
 
+// Simple stereo width for mono signals
+register('stereowidth', (pat) => {
+  return pat
+    .pan(0.15)
+    .superimpose(x => x.late(1/75).pan(0.85).add(note(0.1)));
+});
+
 setCps(130/60/4);
 
 // === SLIDERS ===
@@ -106,4 +113,5 @@ note(pick(patternPick, patterns))
   .lpf(fCutoff)
   .lpq(fRes)
   .lpdecay(fDecay)
-  .lpenv(fEnv);
+  .lpenv(fEnv)
+  .stereowidth();

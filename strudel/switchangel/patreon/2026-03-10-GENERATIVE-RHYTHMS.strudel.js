@@ -1,3 +1,5 @@
+// https://www.patreon.com/posts/strudel-micro-2-152658733
+
 $: s("hh:3 hh hh hh");
 const density = slider(0.5).mul(2);
 const perl = slider(0.5).mul(16);

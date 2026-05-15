@@ -1,3 +1,5 @@
+// https://www.patreon.com/posts/livecode-micro-6-157433177
+
 window.DX = (donk = .8) => {
     donk = reify(donk);
     return s("sine").fm(donk.mul(6)).fmdec(.2);

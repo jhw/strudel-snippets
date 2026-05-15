@@ -1,3 +1,5 @@
+// https://www.patreon.com/posts/livecode-micro-5-156052692
+
 setCpm(136/4);
 
 $KICK: s("bd:2!4").bank("tr909").gain(.8).dec(.2).duck("3");

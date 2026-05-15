@@ -1,3 +1,5 @@
+// https://www.patreon.com/posts/strudel-micro-4-154289058
+
 setCpm(140/4);
 
 $: s("bd").seg(8)
